@@ -24,7 +24,7 @@ npm run build
 
 Andri Januardi
 
-## Geopasial Designer
+## Geospasial Designer
 
 Zulkiram
 
@@ -36,4 +36,4 @@ Zulkiram
 ## Hak Cipta
 
 Dinas Perhubungan Kab. Simeulue
-"# geosipa" 
+"# geosipa"
