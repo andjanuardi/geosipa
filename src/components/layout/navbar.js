@@ -57,7 +57,6 @@ export default function Navbar({ open, setOpen }) {
         <div className=" flex-1 text-white lg:font-bold hidden lg:block text-sm">
           Sistem Informasi Pengeloaan Aset Berbasis Geospasial Dinas Perhubungan
           Kab. Simeulue
-          {process.env.BASE_URL}
         </div>
         {session === "authenticated" && (
           <>
