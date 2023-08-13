@@ -25,7 +25,7 @@ function UbahKategori({ getMenu, data }) {
       onSubmit={async (values) => {
         values.icon = imgFile;
 
-        await fetch("/api/tipe/ubah", {
+        await fetch(process.env.BASE_URL + "/api/tipe/ubah", {
           method: "POST",
           body: JSON.stringify(values),
         })

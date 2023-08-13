@@ -47,7 +47,7 @@ const Dashboard = () => {
   }
 
   async function getData() {
-    await fetch("/api/koordinat")
+    await fetch(process.env.BASE_URL + "/api/koordinat")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -56,7 +56,7 @@ const Dashboard = () => {
   }
 
   async function getMenu() {
-    await fetch("/api/menu")
+    await fetch(process.env.BASE_URL + "/api/menu")
       .then((res) => res.json())
       .then((data) => {
         setMenu(data);
@@ -65,7 +65,7 @@ const Dashboard = () => {
   }
 
   async function getSubMenu(id) {
-    await fetch("/api/submenu", {
+    await fetch(process.env.BASE_URL + "/api/submenu", {
       method: "POST",
       body: JSON.stringify({ id: id }),
     })
@@ -96,7 +96,7 @@ const Dashboard = () => {
       cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch("/api/aset/hapus", {
+        await fetch(process.env.BASE_URL + "/api/aset/hapus", {
           method: "POST",
           body: JSON.stringify({ id: id }),
         })

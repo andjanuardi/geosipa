@@ -38,7 +38,7 @@ export default function Ubah({ data, reloadData }) {
         onSubmit={async (values) => {
           setLoadingStat(1);
           values.gambar = profilImg;
-          await fetch("/api/aset/ubah", {
+          await fetch(process.env.BASE_URL + "/api/aset/ubah", {
             method: "POST",
             body: JSON.stringify(values),
           })

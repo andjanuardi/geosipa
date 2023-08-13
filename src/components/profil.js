@@ -17,7 +17,7 @@ function Profil() {
   }, []);
 
   async function getData() {
-    await fetch("/api/user/detail", {
+    await fetch(process.env.BASE_URL + "/api/user/detail", {
       method: "POST",
       body: JSON.stringify({ id: 1 }),
     })
@@ -72,7 +72,7 @@ function Profil() {
             nip: data.nip,
           }}
           onSubmit={async (values) => {
-            await fetch("/api/user/ubah", {
+            await fetch(process.env.BASE_URL + "/api/user/ubah", {
               method: "POST",
               body: JSON.stringify(values),
             })
@@ -169,7 +169,7 @@ function Profil() {
             pass: "",
           }}
           onSubmit={async (values) => {
-            await fetch("/api/user/pass", {
+            await fetch(process.env.BASE_URL + "/api/user/pass", {
               method: "POST",
               body: JSON.stringify(values),
             })

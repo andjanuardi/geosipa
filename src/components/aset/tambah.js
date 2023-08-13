@@ -8,7 +8,9 @@ import { closeModal } from "../swal";
 import convertToBase64 from "../convertToBase64";
 
 export default function Tambah({ data = [], reloadData }) {
-  const [profilImg, setprofilImg] = useState("/assets/img.jpg");
+  const [profilImg, setprofilImg] = useState(
+    process.env.BASE_URL + "/assets/img.jpg"
+  );
   const inputProfil = useRef();
 
   const [loadingStat, setLoadingStat] = useState(0);
@@ -59,7 +61,7 @@ export default function Tambah({ data = [], reloadData }) {
           setLoadingStat(1);
           values.id_tipe = data.id;
           values.gambar = profilImg;
-          await fetch("/api/aset/tambah", {
+          await fetch(process.env.BASE_URL + "/api/aset/tambah", {
             method: "POST",
             body: JSON.stringify(values),
           })

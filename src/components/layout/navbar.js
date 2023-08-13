@@ -15,7 +15,7 @@ export default function Navbar({ open, setOpen }) {
   }, []);
 
   async function getDataUser() {
-    await fetch("/api/user/detail", {
+    await fetch(process.env.BASE_URL + "/api/user/detail", {
       method: "POST",
       body: JSON.stringify({ id: 1 }),
     })
@@ -33,7 +33,10 @@ export default function Navbar({ open, setOpen }) {
     <div className="flex h-[var(--h-navbar-mobile)] lg:h-[var(--h-navbar)]   bg-blue-400 drop-shadow-lg fixed w-screen z-50 ">
       <div className=" bg-blue-600 h-full  lg:w-[var(--w-menu)] flex gap-3  items-center p-4">
         <div>
-          <img className="w-[5em] lg:w-[2em]" src="/assets/logo.png" />
+          <img
+            className="w-[5em] lg:w-[2em]"
+            src={`${process.env.BASE_URL}/assets/logo.png`}
+          />
         </div>
         <div>
           <div className=" text-white font-extrabold lg:text-[20pt]">
@@ -54,6 +57,7 @@ export default function Navbar({ open, setOpen }) {
         <div className=" flex-1 text-white lg:font-bold hidden lg:block text-sm">
           Sistem Informasi Pengeloaan Aset Berbasis Geospasial Dinas Perhubungan
           Kab. Simeulue
+          {process.env.BASE_URL}
         </div>
         {session === "authenticated" && (
           <>

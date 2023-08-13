@@ -24,7 +24,7 @@ function Menu({
   const { status: session } = useSession();
 
   async function btnEdit(id) {
-    await fetch("/api/aset/detail", {
+    await fetch(process.env.BASE_URL + "/api/aset/detail", {
       method: "POST",
       body: JSON.stringify({ id: id }),
     })
@@ -45,7 +45,7 @@ function Menu({
       cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch("/api/tipe/hapus", {
+        await fetch(process.env.BASE_URL + "/api/tipe/hapus", {
           method: "POST",
           body: JSON.stringify({ id: id }),
         })

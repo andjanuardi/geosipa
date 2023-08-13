@@ -10,7 +10,7 @@ export default function Detail({ data }) {
     getData();
   }, []);
   async function getData() {
-    await fetch("/api/aset/detail", {
+    await fetch(process.env.BASE_URL + "/api/aset/detail", {
       method: "POST",
       body: JSON.stringify({ id: data.id }),
     })
@@ -24,7 +24,13 @@ export default function Detail({ data }) {
   return (
     <div className="lg:w-[30vw] ">
       <div
-        style={{ backgroundImage: `url(${d.gambar})` }}
+        style={{
+          backgroundImage: `url(${
+            d.gambar === "/assets/img.jpg"
+              ? process.env.BASE_URL + d.gambar
+              : d.gambar
+          })`,
+        }}
         className=" h-52 bg-center bg-cover overflow-hidden rounded-t-md flex flex-col justify-between pb-2"
       >
         <div className="flex gap-2 pl-4 pr-2 py-2 items-center bg-white/50 shadow">

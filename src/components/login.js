@@ -9,7 +9,10 @@ export default function Login() {
     <div className=" rounded overflow-hidden flex flex-col bg-blue-400 gap-3">
       <div className=" p-7 text-white bg-blue-700 flex gap-5 drop-shadow-lg">
         <div>
-          <img className=" w-[5em]" src="/assets/logo.png" />
+          <img
+            className=" w-[5em]"
+            src={`${process.env.BASE_URL}/assets/logo.png`}
+          />
         </div>
         <div>
           <div className=" font-black text-[20pt]">GeoSIPA</div>

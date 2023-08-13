@@ -6,7 +6,9 @@ import { Field, Form, Formik } from "formik";
 
 function TambahKategori({ getMenu }) {
   const inputFile = useRef();
-  const [imgFile, setImgFile] = useState("/assets/icon/marker.png");
+  const [imgFile, setImgFile] = useState(
+    process.env.BASE_URL + "/assets/icon/marker.png"
+  );
 
   async function ubahIcon(e) {
     try {
@@ -28,7 +30,7 @@ function TambahKategori({ getMenu }) {
       onSubmit={async (values) => {
         values.icon = imgFile;
 
-        await fetch("/api/tipe/tambah", {
+        await fetch(process.env.BASE_URL + "/api/tipe/tambah", {
           method: "POST",
           body: JSON.stringify(values),
         })
