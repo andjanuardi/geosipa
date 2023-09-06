@@ -83,7 +83,7 @@ export default function Login() {
           Hak Cipta @ Dinas Perhubungan Kab. Simeulue
         </div>
         <div className=" text-center mb-7">
-          Programmer : Andri Januardi, Fuazi Lestari, Teuku Alvian <br />
+          Programmer : Andri Januardi, Fauzi Lestari, Teuku Alvian <br />
           Ahli Geospasial : Zulkiram
         </div>
       </div>

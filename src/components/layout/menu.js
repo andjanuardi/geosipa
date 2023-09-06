@@ -20,6 +20,8 @@ function Menu({
   open,
   setOpen,
   getMenu,
+  setActiveTileLayer,
+  baseMap,
 }) {
   const { status: session } = useSession();
 
@@ -60,13 +62,28 @@ function Menu({
   return (
     <div
       id="menu"
-      className={` w-[var(--w-menu-mobile)] md:w-[var(--w-menu)] lg:w-[var(--w-menu)] lg:mt-[3em]  lg:ml-[3em] lg:rounded-lg  h-[calc(100dvh-var(--h-navbar-mobile))] lg:h-[calc(90vh-var(--h-navbar))] bg-white/50 backdrop-blur-lg fixed z-[999]   transition-all ${
+      className={` w-[var(--w-menu-mobile)] md:w-[var(--w-menu)] lg:w-[var(--w-menu)] lg:mt-[3em]  lg:ml-[3em] lg:rounded-lg  h-[calc(100dvh-var(--h-navbar-mobile))] lg:h-[calc(90vh-var(--h-navbar))] bg-white/70 backdrop-blur-lg fixed z-[999]   transition-all ${
         open
           ? "left-0"
           : "-left-[var(--w-menu-mobile)] lg:-left-[calc(var(--w-menu)+3em)]"
       } `}
     >
       <div className="flex flex-col py-5 h-full gap-2">
+        <div className="h-fit self-center font-bold ">TIPE PETA</div>
+        <div className="flex gap-2 p-2 px-5 ">
+          <div
+            onClick={() => setActiveTileLayer(baseMap.googleSatelite)}
+            className=" btn flex  flex-1 bg-[url('/assets/satelit.jpg')]  rounded-lg bordered border-1 border-white/50 hover:font-bold cursor-pointer drop-shadow-sm text-white"
+          >
+            Google Satelite
+          </div>
+          <div
+            onClick={() => setActiveTileLayer(baseMap.googleStreet)}
+            className=" btn flex-1 bg-[url('/assets/peta.jpg')]  rounded-lg bordered border-1 border-white/50 hover:font-bold cursor-pointer drop-shadow-sm text-white"
+          >
+            Google Street
+          </div>
+        </div>
         <div className="h-fit self-center font-bold ">DAFTAR ASET</div>
         <div className="overflow-auto flex-1 rounded-lg">
           <form onSubmit={(e) => e.preventDefault()}>

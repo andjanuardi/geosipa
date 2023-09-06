@@ -31,6 +31,9 @@ export const authOptions = {
           });
 
         if (credentials.user === user.user && credentials.pass === user.pass) {
+          await fetch(
+            process.env.NEXTAUTH_URL + "/api/auth/last?id=" + user.id
+          );
           return { name: user };
         } else {
           return null;

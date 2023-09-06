@@ -34,6 +34,21 @@ const Dashboard = () => {
   const [activeMenu, setActiveMenu] = useState(1);
   const refMaker = useRef({});
 
+  const baseMap = {
+    googleStreet: {
+      url: "http://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+      name: "Google Map",
+      link: "https://www.google.co.id/maps/",
+    },
+    googleSatelite: {
+      url: "http://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+      name: "Google Map Satelite",
+      link: "https://www.google.co.id/maps/",
+    },
+  };
+
+  const [activeTileLayer, setActiveTileLayer] = useState(baseMap.googleStreet);
+
   useEffect(() => {
     getData();
     getMenu();
@@ -128,6 +143,8 @@ const Dashboard = () => {
           open={open}
           setOpen={setOpen}
           getMenu={getMenu}
+          setActiveTileLayer={setActiveTileLayer}
+          baseMap={baseMap}
         />
         {/* Map */}
         <div className="flex-1">
@@ -141,7 +158,7 @@ const Dashboard = () => {
             <ZoomControl position="topright" />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              url={activeTileLayer.url}
             />
             {data.map((d, k) => (
               <Marker
