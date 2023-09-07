@@ -47,7 +47,7 @@ export default function Welcome() {
               <div className="stats shadow stats-vertical lg:stats-horizontal bg-white/50">
                 {stat.stat &&
                   stat.stat.map((d, k) => (
-                    <div className="stat">
+                    <div className="stat" key={k}>
                       <div className="stat-title font-bold">{d.label}</div>
                       <div className={`stat-value drop-shadow-md `}>
                         {d.data[0]}
