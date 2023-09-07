@@ -8,7 +8,7 @@ export default function handler(req, res) {
 
       db.query(query, (err, ret) => {
         if (err) throw err;
-        res.status(200).json(ret);
+        res.status(200).json({ labels: ret.tipe, stat: ret.jml });
       });
     } catch (error) {
       res.status(200).json(false);

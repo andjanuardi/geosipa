@@ -5,11 +5,12 @@ import { showModal } from "../swal";
 import Profil from "../profil";
 import Login from "../login";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Navbar({ open, setOpen }) {
   const [dataUser, setDataUser] = useState([]);
   const { status: session } = useSession();
-
+  const router = useRouter();
   useEffect(() => {
     session === "authenticated" && getDataUser();
   }, []);
@@ -31,10 +32,13 @@ export default function Navbar({ open, setOpen }) {
 
   return (
     <div className="flex h-[var(--h-navbar-mobile)] lg:h-[var(--h-navbar)]   bg-blue-400 drop-shadow-lg fixed w-screen z-50 ">
-      <div className=" bg-blue-600 h-full  lg:w-[var(--w-menu)] flex gap-3  items-center p-4">
+      <div
+        className=" bg-blue-600 h-full  lg:w-[var(--w-menu)] flex gap-3  items-center p-4"
+        onClick={() => router.push("/")}
+      >
         <div>
           <img
-            className="w-[5em] lg:w-[2em]"
+            className="w-[3em] lg:w-[2em]"
             src={`${process.env.BASE_URL}/assets/logo.png`}
           />
         </div>
@@ -54,6 +58,12 @@ export default function Navbar({ open, setOpen }) {
         >
           <BiMenu className="text-xl" />
         </button>
+        {/* <label
+          htmlFor="my-drawer"
+          className="btn btn-sm btn-ghost drawer-button text-white text-lg "
+        >
+          <BiMenu className="text-xl" />
+        </label> */}
         <div className=" flex-1 text-white lg:font-bold hidden lg:block text-sm">
           Sistem Informasi Pengeloaan Aset Berbasis Geospasial Dinas Perhubungan
           Kab. Simeulue
@@ -79,6 +89,12 @@ export default function Navbar({ open, setOpen }) {
         )}
       </div>
       <div className=" h-full justify-center  flex-1 items-center p-3 lg:hidden join ">
+        {/* <label
+          htmlFor="my-drawer"
+          className="btn btn-md btn-ghost bg-white/20  drawer-button text-white text-lg join-item "
+        >
+          <BiMenu className="text-xl" />
+        </label> */}
         <button
           className="btn btn-md bg-white/20 btn-ghost text-white text-lg join-item "
           onClick={() => setOpen(!open)}

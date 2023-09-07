@@ -1,10 +1,13 @@
 import Loader from "@/components/loading";
 import dynamic from "next/dynamic";
 
-export default function Home() {
-  const Dashboard = dynamic(() => import("@/components/dashboard"), {
+function Dashboard() {
+  const Peta = dynamic(() => import("@/components/peta"), {
     ssr: false,
     loading: () => <Loader />,
   });
-  return <Dashboard />;
+
+  return <Peta />;
 }
+
+export default Dashboard;
