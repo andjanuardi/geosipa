@@ -22,7 +22,7 @@ export default function Detail({ data }) {
   }
 
   return (
-    <div className="lg:w-[30vw] ">
+    <div className="lg:w-[30vw]  ">
       <div
         style={{
           backgroundImage: `url(${
@@ -31,16 +31,16 @@ export default function Detail({ data }) {
               : d.gambar
           })`,
         }}
-        className=" h-52 bg-center bg-cover overflow-hidden rounded-t-md flex flex-col justify-between pb-2"
+        className=" h-[300px]  bg-center bg-contain bg-no-repeat overflow-hidden rounded-t-md flex flex-col justify-between pb-2"
       >
-        <div className="flex gap-2 pl-4 pr-2 py-2 items-center bg-white/50 shadow">
+        <div className="flex gap-2 pl-4 pr-2 py-2 items-center bg-white shadow">
           <img src={d.icon} className="h-[20px]" />
           <span className="flex-1 text-left text-sm font-bold ">{d.nama}</span>
           <button onClick={() => closeModal()} className="btn btn-sm btn-ghost">
             <FaTimes />
           </button>
         </div>
-        <small className=" text-right pr-2 italic">
+        <small className=" bg-black/60 w-fit self-end p-2 text-white text-right pr-2 italic">
           {d.lat}, {d.long}
         </small>
       </div>

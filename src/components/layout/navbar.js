@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
-import { BiLogIn, BiMenu } from "react-icons/bi";
+import { BiLogIn, BiMenu, BiRefresh } from "react-icons/bi";
 import { showModal } from "../swal";
 import Profil from "../profil";
 import Login from "../login";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-export default function Navbar({ open, setOpen }) {
+export default function Navbar({ open, setOpen, getData }) {
   const [dataUser, setDataUser] = useState([]);
   const { status: session } = useSession();
   const router = useRouter();
@@ -42,7 +42,7 @@ export default function Navbar({ open, setOpen }) {
             src={`${process.env.BASE_URL}/assets/logo.png`}
           />
         </div>
-        <div>
+        <div className="cursor-pointer" onClick={() => router.push("/")}>
           <div className=" text-white font-extrabold lg:text-[20pt]">
             GeoSIPA
           </div>
@@ -52,12 +52,20 @@ export default function Navbar({ open, setOpen }) {
         </div>
       </div>
       <div className="  flex-1 lg:flex gap-4 justify-end  items-center p-3 hidden ">
-        <button
-          className="btn btn-sm btn-ghost text-white text-lg "
-          onClick={() => setOpen(!open)}
-        >
-          <BiMenu className="text-xl" />
-        </button>
+        <div>
+          <button
+            className="btn btn-sm btn-ghost text-white text-lg "
+            onClick={() => setOpen(!open)}
+          >
+            <BiMenu className="text-xl" />
+          </button>
+          <button
+            className="btn btn-sm btn-ghost text-white text-lg"
+            onClick={() => getData()}
+          >
+            <BiRefresh />
+          </button>
+        </div>
         {/* <label
           htmlFor="my-drawer"
           className="btn btn-sm btn-ghost drawer-button text-white text-lg "

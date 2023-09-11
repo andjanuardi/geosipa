@@ -77,8 +77,8 @@ export default function Home() {
         />
         <div className="drawer-content">
           <div>
-            <Navbar open={open} setOpen={setOpen} />
-            <div className="w-full h-full mt-[var(--h-navbar-mobile)] lg:mt-[var(--h-navbar)] fixed flex  ">
+            <Navbar open={open} setOpen={setOpen} getData={getData} />
+            <div className="w-full lg:h-[var(--h-peta)] h-[var(--h-peta-mobile)] mt-[var(--h-navbar-mobile)] lg:mt-[var(--h-navbar)] -z-50 absolute flex  ">
               <div className="flex-1">
                 <MapContainer
                   center={centerMap.center}
@@ -89,7 +89,7 @@ export default function Home() {
                   <Goto coor={centerMap.center} zoom={centerMap.zoom} />
                   <ZoomControl position="topright" />
                   <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    attribution={`&copy; <a href="${activeTileLayer.link}">${activeTileLayer.name}</a> contributors`}
                     url={activeTileLayer.url}
                   />
                   {data.map((d, k) => (
@@ -139,8 +139,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="drawer-side ">
-          <label htmlFor="my-drawer" className="drawer-overlay"></label>
+        <div className="drawer-side  ">
+          <label
+            htmlFor="my-drawer"
+            className="drawer-overlay"
+            onClick={() => setOpen(false)}
+          ></label>
           <div className="menu p-0 py-5 w-[var(--w-menu-mobile)]  lg:w-[var(--w-menu)] min-h-full bg-white text-base-content mt-[var(--h-navbar-mobile)] lg:mt-[var(--h-navbar)]">
             <MenuAset
               setCenterMap={setCenterMap}

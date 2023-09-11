@@ -8,8 +8,12 @@ import { Field, Form, Formik } from "formik";
 import Swal from "sweetalert2";
 
 export default function Ubah({ data, reloadData }) {
-  const [profilImg, setprofilImg] = useState(data.gambar);
+  const [profilImg, setprofilImg] = useState("/assets/img.jpg");
+  const [IconImg, setIconImg] = useState(data.icon);
+
   const inputProfil = useRef();
+  const inputIcon = useRef();
+
   const [loadingStat, setLoadingStat] = useState(0);
 
   async function fileUpload(e) {
@@ -21,10 +25,35 @@ export default function Ubah({ data, reloadData }) {
     }
   }
 
+  useEffect(() => {
+    getGambar(data.id);
+  }, []);
+
+  async function getGambar(id) {
+    await fetch(process.env.BASE_URL + "/api/getImage", {
+      method: "POST",
+      body: JSON.stringify({ id: id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setprofilImg(data[0].gambar);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  async function IconUpload(e) {
+    const file = e.target.files[0];
+    if (file.size > 102400) {
+      alert("Ukuran file lebih dari 100 Kb");
+    } else {
+      setIconImg(await convertToBase64(file));
+    }
+  }
+
   return (
     <div>
       <div className="flex gap-2 pl-4 pr-2 py-2 items-center  shadow">
-        <img src={data.icon} className="h-[20px]" />
+        <img src={IconImg} className="h-[20px]" />
 
         <span className="flex-1 text-left text-sm font-bold ">
           Ubah {data.nama}
@@ -38,6 +67,8 @@ export default function Ubah({ data, reloadData }) {
         onSubmit={async (values) => {
           setLoadingStat(1);
           values.gambar = profilImg;
+          values.icon = IconImg;
+
           await fetch(process.env.BASE_URL + "/api/aset/ubah", {
             method: "POST",
             body: JSON.stringify(values),
@@ -55,22 +86,39 @@ export default function Ubah({ data, reloadData }) {
           <div className="flex gap-5 p-5 flex-wrap w-full">
             <div
               style={{ backgroundImage: `url(${profilImg})` }}
-              className={`  w-full min-h-[300px] bg-cover bg-center overflow-hidden flex flex-col justify-end   rounded drop-shadow`}
+              className={`  w-full min-h-[500px] bg-contain bg-no-repeat bg-center overflow-hidden flex flex-col justify-end   rounded drop-shadow`}
             >
-              <div className="self-end m-3">
-                <label
-                  className="btn"
-                  onClick={() => inputProfil.current.click()}
-                >
-                  <FaCamera />
-                </label>
-                <input
-                  ref={inputProfil}
-                  type="file"
-                  className="hidden"
-                  onChange={fileUpload}
-                  accept="image/png, image/jpeg"
-                />
+              <div className="self-end m-3 flex gap-2">
+                <div>
+                  <label
+                    className="btn"
+                    onClick={() => inputIcon.current.click()}
+                  >
+                    <img src={IconImg} className="w-[20px] h-[20px]" />
+                  </label>
+                  <input
+                    ref={inputIcon}
+                    type="file"
+                    className="hidden"
+                    onChange={IconUpload}
+                    accept="image/png, image/jpeg"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="btn"
+                    onClick={() => inputProfil.current.click()}
+                  >
+                    <FaCamera />
+                  </label>
+                  <input
+                    ref={inputProfil}
+                    type="file"
+                    className="hidden"
+                    onChange={fileUpload}
+                    accept="image/png, image/jpeg"
+                  />
+                </div>
               </div>
             </div>
             <div className="text-left flex flex-col p-5 shadow-lg  gap-2 w-full overflow-auto">
@@ -183,8 +231,8 @@ export default function Ubah({ data, reloadData }) {
                   <small>Tahun Pembangunan / Pengadaan</small>
                   <Field
                     required
-                    type="number"
-                    min={1945}
+                    type="text"
+                    min={0}
                     name="tahun"
                     className="input input-sm input-bordered w-full mt-2"
                   />

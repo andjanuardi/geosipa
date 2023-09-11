@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FaPencilAlt, FaPlus, FaTrashAlt } from "react-icons/fa";
+import { FaDownload, FaPencilAlt, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { showModal } from "../swal";
 import TambahKategori from "../tipe/tambah";
 import hapusKategori from "../tipe/hapus";
@@ -8,6 +8,8 @@ import Tambah from "../aset/tambah";
 import Ubah from "../aset/ubah";
 import hapus from "../aset/hapus";
 import { useSession } from "next-auth/react";
+import * as XLSX from "xlsx";
+import { dateNow, dateToTable } from "../datefunction";
 
 function MenuAset({
   setCenterMap,
@@ -41,6 +43,19 @@ function MenuAset({
       .catch((err) => console.log(err));
   }
 
+  async function btnDownload() {
+    await fetch("api/aset/download", { method: "POST" })
+      .then((e) => e.json())
+      .then((data) => {
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+        //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+        XLSX.writeFile(workbook, `GeoSipa.xlsx`);
+      });
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <div className="font-black text-center">TIPE PETA</div>
@@ -61,11 +76,21 @@ function MenuAset({
       </div>
       <div className="font-black text-center">DAFTAR ASET</div>
       <div className="px-4 flex flex-col relative">
-        <input
-          className="input input-bordered"
-          placeholder="Cari.."
-          onChange={(e) => setInputCari(e.currentTarget.value)}
-        />
+        <div className="flex join">
+          <input
+            className="input input-bordered flex-1 join-item"
+            placeholder="Cari.."
+            onChange={(e) => setInputCari(e.currentTarget.value)}
+          />
+          {session === "authenticated" && (
+            <button
+              className="btn btn-info text-white join-item"
+              onClick={() => btnDownload()}
+            >
+              <FaDownload />
+            </button>
+          )}
+        </div>
         {itemCari.length > 0 && (
           <ul
             tabIndex={0}
@@ -100,7 +125,7 @@ function MenuAset({
                   defaultChecked
                 /> */}
                 <img src={d.icon} alt="icon" className="h-[25px]" />
-                <div className="flex-1">{d.nama}</div>
+                <div className="flex-1 uppercase font-bold">{d.nama}</div>
               </summary>
               <ul>
                 {session === "authenticated" && (
@@ -161,21 +186,38 @@ function MenuAset({
                                   className="checkbox checkbox-xs"
                                   defaultChecked
                                 /> */}
-                                <div className="flex-1">{d3.nama}</div>
+                                <div className="flex-1 flex gap-2">
+                                  <img
+                                    src={d3.icon}
+                                    alt="icon"
+                                    className="h-[25px]"
+                                  />
+                                  {d3.nama}
+                                </div>
                                 {session === "authenticated" && (
-                                  <button
-                                    className="btn btn-sm btn- btn-ghost"
-                                    onClick={() =>
-                                      showModal(
-                                        <Ubah
-                                          data={d3}
-                                          reloadData={reloadDataMenu}
-                                        />
-                                      )
-                                    }
-                                  >
-                                    <FaPencilAlt />
-                                  </button>
+                                  <div>
+                                    <button
+                                      className="btn btn-sm btn- btn-ghost"
+                                      onClick={() => {
+                                        showModal(
+                                          <Ubah
+                                            data={d3}
+                                            reloadData={reloadDataMenu}
+                                          />
+                                        );
+                                      }}
+                                    >
+                                      <FaPencilAlt />
+                                    </button>
+                                    <button
+                                      className="btn btn-sm btn- btn-ghost"
+                                      onClick={() =>
+                                        hapus(d3.id, d3.nama, reloadDataMenu)
+                                      }
+                                    >
+                                      <FaTrashAlt />
+                                    </button>
+                                  </div>
                                 )}
                               </a>
                             </li>
@@ -189,9 +231,19 @@ function MenuAset({
                                 className="checkbox checkbox-xs"
                                 defaultChecked
                               /> */}
-                              <div className="flex-1">{d2.jenis}</div>
+                              <div className="flex-1 font-bold uppercase">
+                                {d2.jenis}
+                              </div>
                             </summary>
                             <ul>
+                              {menuitem.filter(
+                                (e) =>
+                                  e.id_tipe === d.id && e.jenis === d2.jenis
+                              ).length <= 0 && (
+                                <li>
+                                  <a>Memuat Data..</a>
+                                </li>
+                              )}
                               {menuitem
                                 .filter(
                                   (e) =>
@@ -209,25 +261,30 @@ function MenuAset({
                                       setOpen(false);
                                     }}
                                   >
-                                    <a className="flex">
+                                    <a className="flex gap-2">
                                       {/* <input
                                         type="checkbox"
                                         className="checkbox checkbox-xs"
                                         defaultChecked
                                       /> */}
+                                      <img
+                                        src={d3.icon}
+                                        alt="icon"
+                                        className="h-[25px]"
+                                      />
                                       <div className="flex-1">{d3.nama}</div>
                                       {session === "authenticated" && (
                                         <>
                                           <button
                                             className="btn btn-sm btn- btn-ghost"
-                                            onClick={() =>
+                                            onClick={() => {
                                               showModal(
                                                 <Ubah
                                                   data={d3}
                                                   reloadData={reloadDataMenu}
                                                 />
-                                              )
-                                            }
+                                              );
+                                            }}
                                           >
                                             <FaPencilAlt />
                                           </button>
