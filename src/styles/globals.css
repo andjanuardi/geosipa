@@ -8,7 +8,7 @@
   --h-peta-mobile: calc(100dvh - var(--h-navbar-mobile));
   --h-navbar-mobile: 4.5em;
   --w-menu: 25vw;
-  --w-menu-mobile: 80vw;
+  --w-menu-mobile: 90vw;
 }
 
 .leaflet-container {
