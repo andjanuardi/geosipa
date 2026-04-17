@@ -28,10 +28,6 @@ Andri Januardi
 
 Zulkiram
 
-## UI/UX Designer
-
-1. Fauzi Lestari
-2. Teuku Alvian
 
 ## Hak Cipta
 
